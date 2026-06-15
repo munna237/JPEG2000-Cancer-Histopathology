@@ -1,0 +1,7 @@
+Dataset,Comparison,Mean_Diff,t_statistic,p_value,Cohens_d,Significant
+BreakHis,CR1 vs CR100,0.0318,1.874,0.1343,0.937,ns
+BreakHis,CR1 vs CR1000,0.0698,7.079,0.0021,3.540,**
+BACH,CR1 vs CR100,0.1100,3.029,0.0388,1.515,*
+BACH,CR1 vs CR1000,0.2925,11.080,0.0004,5.540,***
+MHIST,CR1 vs CR100,0.0010,0.152,0.8864,0.076,ns
+MHIST,CR1 vs CR1000,0.0039,0.432,0.6879,0.216,ns

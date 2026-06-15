@@ -1,0 +1,4 @@
+Dataset,Country,Cancer Type,Images,Classes,Resolution
+BreakHis,Brazil,Breast,7909,Benign/Malignant,224×224
+BACH,Portugal,Breast,400,Benign/Malignant,224×224
+MHIST,USA,Colorectal,3152,Benign/Malignant,224×224

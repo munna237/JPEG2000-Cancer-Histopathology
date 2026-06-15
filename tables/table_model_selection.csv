@@ -1,0 +1,14 @@
+Model,Accuracy (%),Folds,Type
+Inception_DenseNet_Attention,84.97 ± 7.23,5,Hybrid + Attention
+CBAM_DenseNet169,84.96 ± 7.08,5,Single + CBAM
+DenseNet169,84.77 ± 8.18,5,Single Backbone
+Xception_DenseNet121,84.68 ± nan,1,Hybrid (Xception-based)
+DualDenseNet_Attention,83.97 ± 9.59,5,Hybrid (Dual Branch)
+Xception_DenseNet169,83.84 ± 7.80,5,Hybrid (Xception-based)
+DenseNet121,83.74 ± 7.16,5,Single Backbone
+SE_DenseNet169,83.73 ± 7.85,5,Single + SE-Block
+Xception_DenseNet121,83.46 ± 7.85,5,Hybrid (Xception-based)
+Attention_Fusion_Hybrid,83.31 ± 6.09,5,Hybrid + Attention
+Xception_ResNet50,78.81 ± nan,1,Hybrid (Xception-based)
+ResNet50,65.68 ± 6.96,5,Single Backbone
+EfficientNetB0,62.23 ± 13.64,5,Single Backbone
