@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Data (too large for GitHub)
+data/BreakHis/
+data/BACH/
+data/MHIST/
+data/compressed/
+*.h5
+*.hdf5
+
+# Models (too large)
+models/*.h5
+models/*.keras
+*.weights
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+wandb/
+
+# Temporary
+tmp/
+temp/
