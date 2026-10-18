@@ -1,0 +1,46 @@
+{
+  "out_dir": "/content/drive/MyDrive/R25_Control",
+  "tierA_pred_dir": "/content/drive/MyDrive/JPEG2000_Revision_TierA/predictions",
+  "cr_levels": [
+    "CR1_original",
+    "CR15",
+    "CR25",
+    "CR50",
+    "CR100",
+    "CR500",
+    "CR1000"
+  ],
+  "n_copies": 5,
+  "seed": 42,
+  "n_folds": 5,
+  "image_size": [
+    224,
+    224
+  ],
+  "batch_size": 32,
+  "epochs": 30,
+  "learning_rate": 0.001,
+  "early_stopping_patience": 5,
+  "reduce_lr_patience": 2,
+  "n_boot": 10000,
+  "datasets": {
+    "BreakHis": {
+      "loader": "breakhis",
+      "data_dir": "/content/drive/MyDrive/BreakHis_Split"
+    },
+    "BACH": {
+      "loader": "bach",
+      "data_dir": "/content/drive/MyDrive/BACH_PLOS_ONE/BACH_Split"
+    },
+    "NCT-CRC": {
+      "loader": "nct",
+      "data_dir": "/content/drive/MyDrive/NCT_CRC_PLOS_ONE/NCT_CRC_Split",
+      "split_file": "/content/drive/MyDrive/NCT_CRC_PLOS_ONE/NCT_CRC_Results_Final/nct_crc_subset_splits.csv"
+    }
+  },
+  "run": [
+    "BreakHis",
+    "BACH",
+    "NCT-CRC"
+  ]
+}

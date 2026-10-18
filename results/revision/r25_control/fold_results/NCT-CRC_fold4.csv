@@ -1,0 +1,2 @@
+dataset,fold,n_train,n_val,epochs_trained,train_seconds
+NCT-CRC,4,26516,6629,16,2079

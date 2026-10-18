@@ -1,0 +1,2 @@
+dataset,fold,n_train,n_val,epochs_trained,train_seconds
+BACH,3,1360,240,10,99

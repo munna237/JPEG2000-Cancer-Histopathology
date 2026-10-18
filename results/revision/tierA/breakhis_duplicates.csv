@@ -1,0 +1,3 @@
+filepath,filename,orig_split,class_name,class_idx,patient_id,magnification,cr_level,subtype,md5
+/content/drive/MyDrive/BreakHis_Split/CR1_original/test/malignant/200X/SOB_M_MC-14-12773-200-011 (1).png,SOB_M_MC-14-12773-200-011 (1).png,test,malignant,1,14-12773,200X,CR1_original,M_MC,c648f0ff19f6f9e40bf72da12ae396d9
+/content/drive/MyDrive/BreakHis_Split/CR1_original/test/malignant/200X/SOB_M_MC-14-12773-200-011.png,SOB_M_MC-14-12773-200-011.png,test,malignant,1,14-12773,200X,CR1_original,M_MC,c648f0ff19f6f9e40bf72da12ae396d9
