@@ -1,198 +1,80 @@
-# JPEG2000 Compression Effects on AI Cancer Diagnosis in Histopathology
+# JPEG2000 Compression Thresholds for Deep Learning-Based Cancer Histopathology Classification
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![TensorFlow 2.15](https://img.shields.io/badge/TensorFlow-2.15-orange.svg)](https://www.tensorflow.org/)
+Code and results for:
 
-This repository contains the code, trained models, and analysis scripts for our study: **"JPEG2000 Compression Thresholds for Deep Learning-Based Cancer Histopathology Classification: A Multi-Dataset, Multi-Tissue Evaluation with Compression-Aware Training"**
+> Munna MMH, Aman N, Kabir AH, Tulona RF, Saha S, Kabir SS, Habib I, Dhrubo V, Sultana T.
+> **JPEG2000 Compression Thresholds for Deep Learning-Based Cancer Histopathology Classification:
+> A Multi-Dataset, Multi-Tissue Evaluation with Compression-Aware Training.** Under review, *PLOS ONE*.
 
-## 📋 Overview
+The study measures how JPEG2000 compression (target ratios CR1–CR1000) affects an
+Inception-DenseNet169 attention hybrid on three histopathology datasets (BreakHis, BACH,
+NCT-CRC-HE-100K) under three protocols: **adaptation** (train and test at the same ratio),
+**robustness** (train on CR1, test at every ratio), and **Compression-Aware Training (CAT)**
+(train on CR1–CR100). The revision adds re-predicted metrics, revised statistics, achieved
+compression ratios, and a size-matched CAT control.
 
-We systematically evaluated JPEG2000 compression effects on deep learning-based cancer classification across three international histopathology datasets, establishing tissue-specific compression guidelines for clinical deployment.
+## Where each result comes from
 
-### Key Findings
+| Paper item | Produced by | Result files |
+|---|---|---|
+| Datasets, compression pipeline | `notebooks/01_compression/` | – |
+| Model selection | `notebooks/02_model_selection/` | – |
+| Rate-distortion table and figure (PSNR, SSIM) | `01_compression/compress_BreakHis.ipynb` (BreakHis), `04_analysis_and_figures/rate_distortion_BACH_NCT-CRC.ipynb` (BACH, NCT-CRC) | `results/rate_distortion/` |
+| Achieved vs target compression ratios | `05_revision/tierA_reprediction_metrics_statistics.ipynb` (Section 4) | `results/rate_distortion/*_achieved_cr_summary.csv`, `*_reencode_per_image.csv` |
+| Adaptation, robustness, and CAT tables and figures | `notebooks/03_experiments/experiments_{BreakHis,BACH,NCT-CRC}.ipynb` | `results/fold_level/<dataset>/` |
+| Additional metrics (balanced accuracy, sensitivity, specificity, MCC, AUC) and NCT-CRC metrics figure | `05_revision/tierA_reprediction_metrics_statistics.ipynb` (Sections 5–6) | `results/revision/tierA/full_metrics_all.csv`, `results/predictions/tierA/` |
+| Statistical analysis (corrected resampled t-test, paired bootstrap, Holm) | `05_revision/tierA_reprediction_metrics_statistics.ipynb` (Section 6), `scripts/make_revision_figures.py` | `results/revision/tierA/paired_comparisons.csv`, `results/revision/tierA/adaptation_corrected_t_all_comparisons.csv` |
+| Size-matched CAT control (volume vs diversity effect) | `05_revision/R2-5_cat_size_matched_control.ipynb` | `results/revision/r25_control/`, `results/predictions/r25_control/` |
+| Sustainability (CO₂) table and figure | `04_analysis_and_figures/sustainability_and_cross_dataset_analysis.ipynb` | `results/sustainability/` |
+| Figures of the original submission | `04_analysis_and_figures/figures_*.ipynb` | – |
+| Revision figures (NCT-CRC metrics, CAT control, compression zones) | `scripts/make_revision_figures.py` | `figures_revision/` (generated) |
+| NCT-CRC subset and splits; test folds | experiment and revision notebooks | `splits/` |
 
-| Finding | Description |
-|---------|-------------|
-| 🟢 **Safe Zone** | CR ≤ 100 is universally safe (<5% accuracy loss) |
-| 🟡 **Caution Zone** | CR 100-500 requires validation for breast tissue |
-| 🔴 **Danger Zone** | CR > 500 risks significant degradation (except colorectal) |
-| 🎯 **CAT Benefit** | Compression-Aware Training recovers up to +13.43% accuracy |
+Executed notebooks keep their outputs, so reported numbers can be checked against the printed run logs.
+`results/revision/tierA/reprediction_check.csv` shows that predictions recomputed from the saved models
+reproduce the fold-level result files to within one or two images per fold.
 
-### Highlights
+## Data
 
-- **3 Datasets**: BreakHis (Brazil), BACH (Portugal), MHIST (USA)
-- **2 Cancer Types**: Breast and Colorectal
-- **13 Models Evaluated**: Systematic architecture selection
-- **7 Compression Ratios**: CR1 (original) to CR1000
-- **3 Experiments**: Adaptation, Robustness, Compression-Aware Training
-- **Sustainability Tracking**: 529g CO₂ total emissions
+The datasets are not redistributed. Download them from the original sources:
 
----
+- **BreakHis:** https://web.inf.ufpr.br/vri/databases/breast-cancer-histopathological-database-breakhis/
+- **BACH (ICIAR 2018):** https://iciar2018-challenge.grand-challenge.org/
+- **NCT-CRC-HE-100K:** https://doi.org/10.5281/zenodo.1214456
 
-## 📁 Repository Structure
+The compression notebooks regenerate every compressed version. `splits/nct_crc_subset_splits.csv`
+lists the 7,799 NCT-CRC images used and their train/validation/test assignment.
 
-```
-JPEG2000-Cancer-Histopathology/
-│
-├── results/
-│   ├── BreakHis/                    # BreakHis experiment results
-│   ├── BACH/                        # BACH experiment results
-│   ├── MHIST/                       # MHIST experiment results
-│   └── model_selection/             # Architecture comparison results
-│
-├── figures/                         # Paper figures (PNG + PDF)
-├── tables/                          # Paper tables (CSV)
-├── notebooks/                       # Jupyter notebooks
-├── data/                            # Dataset download instructions
-│
-├── README.md
-├── requirements.txt
-├── LICENSE
-└── .gitignore
-```
+## Reproducing
 
----
+1. Run `notebooks/01_compression/` for each dataset to create the CR1–CR1000 folders.
+2. Run `notebooks/03_experiments/` for each dataset (adaptation, robustness, CAT).
+3. Run `notebooks/05_revision/tierA_reprediction_metrics_statistics.ipynb` (re-prediction, metrics,
+   statistics, achieved ratios), then `notebooks/05_revision/R2-5_cat_size_matched_control.ipynb`
+   (size-matched CAT control; about 6 h on an NVIDIA L4).
+4. Run `python scripts/make_revision_figures.py` from the repository root.
 
-## 🗃️ Datasets
+The notebooks were run on Google Colab with Google Drive storage; paths of the form
+`/content/drive/MyDrive/...` must be adapted to your environment. The NCT-CRC notebook defines its own
+model-building function (fusion head and mixed-precision setting are in the notebook).
 
-We used three publicly available histopathology datasets:
+**Software:** Python 3, TensorFlow/Keras (version printed at the top of each executed notebook;
+2.20–2.21 for the NCT-CRC and revision runs), Glymur/OpenJPEG, scikit-learn, CodeCarbon.
+**Hardware:** NVIDIA T4 and L4 GPUs (Google Colab).
 
-| Dataset | Country | Cancer Type | Images | Source |
-|---------|---------|-------------|--------|--------|
-| **BreakHis** | 🇧🇷 Brazil | Breast | 7,909 | [Link](https://web.inf.ufpr.br/vri/databases/breast-cancer-histopathological-database-breakhis/) |
-| **BACH** | 🇵🇹 Portugal | Breast | 400 | [Link](https://iciar2018-challenge.grand-challenge.org/) |
-| **MHIST** | 🇺🇸 USA | Colorectal | 3,152 | [Link](https://bmirds.github.io/MHIST/) |
+## Trained models
 
-See `data/README.md` for detailed download instructions.
+The trained model weights (about 150 `.keras` files of about 150 MB each) exceed GitHub's file-size
+limit and are not included. They are available from the corresponding author on request.
 
----
+## Contact
 
-## 🔧 Installation
+Mohammad Mehedi Hasan Munna — mohammadmehedi.munna@gmail.com
 
-```bash
-# Clone repository
-git clone https://github.com/munna237/JPEG2000-Cancer-Histopathology.git
-cd JPEG2000-Cancer-Histopathology
+## Citation
 
-# Install dependencies
-pip install -r requirements.txt
-```
+See `CITATION.cff`. Please also cite the original dataset publications.
 
----
+## License
 
-## 🧪 Experiments
-
-### Model Selection
-
-We evaluated 13 architectures on BreakHis (CR1, 5-fold CV):
-
-| Rank | Model | Accuracy |
-|------|-------|----------|
-| 1 | **Inception-DenseNet-Attention** | **84.97% ± 7.23%** ✅ |
-| 2 | CBAM-DenseNet169 | 84.96% ± 7.08% |
-| 3 | DenseNet169 | 84.77% ± 8.18% |
-| 4 | DualDenseNet-Attention | 83.97% ± 9.59% |
-| 5 | Xception-DenseNet169 | 83.84% ± 7.80% |
-| ... | ... | ... |
-| 12 | ResNet50 | 65.68% ± 6.96% |
-| 13 | EfficientNetB0 | 62.23% ± 13.64% |
-
-### Three Experiments
-
-1. **Adaptation Study**: Train and test at matched compression levels
-2. **Robustness Study**: Train on CR1, evaluate on all compression levels
-3. **Compression-Aware Training (CAT)**: Train on mixed compression levels
-
----
-
-## 📊 Results
-
-### Key Findings
-
-| Dataset | CR1 Acc | CR100 Drop | CR1000 Drop | CAT Recovery |
-|---------|---------|------------|-------------|--------------|
-| **BreakHis** 🇧🇷 | 85.61% | -3.18% | -6.98% | **+13.43%** |
-| **BACH** 🇵🇹 | 77.75% | -11.00% | **-29.25%** | +1.75% |
-| **MHIST** 🇺🇸 | 80.57% | -0.10% | -0.39% | -1.94% |
-
-### Statistical Significance
-
-| Comparison | BreakHis | BACH | MHIST |
-|------------|----------|------|-------|
-| CR1 vs CR100 | ns | * (p=0.039) | ns |
-| CR1 vs CR1000 | ** (p=0.002) | *** (p<0.001) | ns |
-
-### Sustainability
-
-| Metric | Value |
-|--------|-------|
-| Total CO₂ | 529.03 g |
-| Total Energy | 0.554 kWh |
-| Training Time | 5.96 hours |
-
----
-
-## 📈 Figures
-
-| Figure | Description |
-|--------|-------------|
-| `fig1_adaptation_all_datasets` | Accuracy across compression levels |
-| `fig2_robustness_vs_cat` | Robustness vs CAT comparison |
-| `fig3_heatmap` | Cross-dataset performance heatmap |
-| `fig4_cat_improvement` | CAT improvement visualization |
-| `fig5_co2_by_cr_level` | CO₂ emissions by compression |
-| `fig6_co2_distribution` | Emissions distribution |
-| `fig7_accuracy_vs_co2` | Accuracy-sustainability trade-off |
-| `fig_model_selection` | Model architecture comparison |
-
----
-
-## 📝 Citation
-
-If you use this code or findings, please cite:
-
-```bibtex
-@article{munna2026jpeg2000,
-  title={Safe JPEG2000 Limits for AI Cancer Diagnosis in Histopathology: 
-         Balancing Storage, Accuracy, and Sustainability},
-  author={Munna, Mohammad Mehedi Hasan and Kabir, Acramul Haque},
-  journal={PLOS ONE},
-  year={2026},
-  publisher={Public Library of Science}
-}
-```
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/improvement`)
-3. Commit changes (`git commit -am 'Add new feature'`)
-4. Push to branch (`git push origin feature/improvement`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see [LICENSE](LICENSE) file.
-
----
-
-## 📧 Contact
-
-- **Mohammad Mehedi Hasan Munna** - [@munna237](https://github.com/munna237)
-- **Email:** - mohammadmehedi.munna@gmail.com
-
----
-
-## 🙏 Acknowledgments
-
-- BreakHis dataset creators (Spanhol et al., 2016)
-- BACH dataset organizers (Aresta et al., 2019)
-- MHIST dataset creators (Wei et al., 2021)
-- CodeCarbon for sustainability tracking
+Code: MIT (see `LICENSE`). Result files in `results/` and `splits/`: CC BY 4.0.
