@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this code or these results, please cite the article."
+title: "JPEG2000 Compression Thresholds for Deep Learning-Based Cancer Histopathology Classification"
+version: "2.0"
+license: MIT
+repository-code: "https://github.com/munna237/JPEG2000-Cancer-Histopathology"
+authors:
+  - family-names: Munna
+    given-names: "Mohammad Mehedi Hasan"
+  - family-names: Aman
+    given-names: Nakib
+  - family-names: Kabir
+    given-names: "Acramul Haque"
+  - family-names: Tulona
+    given-names: "Reefka Fabliha"
+  - family-names: Saha
+    given-names: Smita
+  - family-names: Kabir
+    given-names: "Seendid Saleh"
+  - family-names: Habib
+    given-names: Iqbal
+  - family-names: Dhrubo
+    given-names: Victor
+  - family-names: Sultana
+    given-names: Tania
