@@ -38,8 +38,8 @@ Executed notebooks keep their outputs, so reported numbers can be checked agains
 The NCT-CRC experiments in the original submission used a different fusion head (concatenation with
 unshared CBAM-style MLPs, mixed float16 precision) from the BreakHis and BACH model. For the revision,
 every NCT-CRC experiment was re-run with exactly the BreakHis/BACH model (branch-level channel attention,
-float32; 36,749,793 parameters), keeping the same subset, split file, fixed test set, folds, and
-training settings. The revised paper reports these results.
+float32; 36,749,793 parameters) and the same evaluation design (five rotating test folds) on the same
+7,799-image subset. The revised paper reports these results.
 
 - `notebooks/03_experiments/experiments_NCT-CRC.ipynb` — revised NCT-CRC run (adaptation, robustness,
   CAT, and size-matched CAT control); source of all NCT-CRC numbers in the revised paper.
